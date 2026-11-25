@@ -11,8 +11,10 @@ class FileHelper
 {
     public function exportExcel(array $data, array $headers, string $filename = 'export.xlsx')
     {
-        $export = new class($data, $headers) implements FromArray, WithHeadings {
+        $export = new class($data, $headers) implements FromArray, WithHeadings
+        {
             protected $data;
+
             protected $headers;
 
             public function __construct($data, $headers)
@@ -38,6 +40,7 @@ class FileHelper
     public function exportPdf(string $view, array $data, string $filename = 'export.pdf')
     {
         $pdf = Pdf::loadView($view, $data);
+
         return $pdf->download($filename);
     }
 

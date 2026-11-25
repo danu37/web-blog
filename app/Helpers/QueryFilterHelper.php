@@ -2,18 +2,15 @@
 
 namespace App\Helpers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class QueryFilterHelper
 {
     /**
      * Apply filters to query builder
      *
-     * @param Builder $query
-     * @param array $filters
-     * @param array $searchColumns - kolom yang bisa di-search
-     * @return Builder
+     * @param  array  $searchColumns  - kolom yang bisa di-search
      */
     public static function applyFilters(Builder $query, array $filters, array $searchColumns = []): Builder
     {
@@ -57,8 +54,8 @@ class QueryFilterHelper
             });
         }
 
-        //Handle search relasi
-        if (isset($filters['relations']) && !empty($filters['relations'])) {
+        // Handle search relasi
+        if (isset($filters['relations']) && ! empty($filters['relations'])) {
             foreach ($filters['relations'] as $relation => $columns) {
                 $query->orWhereHas($relation, function ($q) use ($columns, $searchTerm) {
                     foreach ($columns as $col) {
@@ -89,7 +86,7 @@ class QueryFilterHelper
         }
 
         // Filter by year only
-        if (isset($filters['year']) && !isset($filters['month'])) {
+        if (isset($filters['year']) && ! isset($filters['month'])) {
             $query->whereYear('created_at', $filters['year']);
         }
 
@@ -125,14 +122,14 @@ class QueryFilterHelper
         // Generic whereIn filters
         if (isset($filters['whereIn']) && is_array($filters['whereIn'])) {
             foreach ($filters['whereIn'] as $field => $values) {
-                if (is_array($values) && !empty($values)) {
+                if (is_array($values) && ! empty($values)) {
                     $query->whereIn($field, $values);
                 }
             }
         }
 
         // Filters by published date
-        if (!empty($filters['published_at'])) {
+        if (! empty($filters['published_at'])) {
             $query->whereDate('published_at', '=', $filters['published_at']);
         }
 
@@ -141,12 +138,6 @@ class QueryFilterHelper
 
     /**
      * Apply sorting to query
-     *
-     * @param Builder $query
-     * @param array $filters
-     * @param string $defaultSort
-     * @param string $defaultDirection
-     * @return Builder
      */
     public static function applySorting(
         Builder $query,
@@ -189,7 +180,7 @@ class QueryFilterHelper
         if (isset($filters['date_from']) || isset($filters['date_to'])) {
             $summary['date_range'] = [
                 'from' => $filters['date_from'] ?? null,
-                'to' => $filters['date_to'] ?? null
+                'to' => $filters['date_to'] ?? null,
             ];
         }
 
@@ -221,11 +212,6 @@ class QueryFilterHelper
 
     /**
      * Get monthly and yearly revenue statistics
-     *
-     * @param Builder $query
-     * @param string $amountColumn
-     * @param string $dateColumn
-     * @return array
      */
     public static function getMonthlyRevenue(Builder $query, string $amountColumn = 'amount_received', string $dateColumn = 'created_at'): array
     {

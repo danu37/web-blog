@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\HomepageSection;
-use App\Models\Media;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\SiteSetting;

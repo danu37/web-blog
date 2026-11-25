@@ -9,11 +9,7 @@ class CursorPaginateHelper
 {
     /**
      * Get to paginate array.
-     *
-     * @param CursorPaginator $paginator
-     * @return array
      */
-
     public static function getPaginate(CursorPaginator $paginator): array
     {
         return [
@@ -28,11 +24,7 @@ class CursorPaginateHelper
 
     /**
      * Get the current path.
-     *
-     * @param CursorPaginator $paginator
-     * @return string
      */
-
     public static function path(CursorPaginator $paginator): string
     {
         return $paginator->path();
@@ -40,11 +32,7 @@ class CursorPaginateHelper
 
     /**
      * Get the current per page.
-     *
-     * @param CursorPaginator $paginator
-     * @return int
      */
-
     public static function perPage(CursorPaginator $paginator): int
     {
         return $paginator->perPage();
@@ -52,44 +40,32 @@ class CursorPaginateHelper
 
     /**
      * Get the next cursor.
-     *
-     * @param CursorPaginator $paginator
-     * @return string|null
      */
-    public static function nextCursor(CursorPaginator $paginator): string|null
+    public static function nextCursor(CursorPaginator $paginator): ?string
     {
         return $paginator->hasMorePages() ? $paginator->nextCursor()->encode() : null;
     }
 
     /**
      * Get the next page URL.
-     *
-     * @param CursorPaginator $paginator
-     * @return string|null
      */
-    public static function nextPageUrl(CursorPaginator $paginator): string|null
+    public static function nextPageUrl(CursorPaginator $paginator): ?string
     {
         return $paginator->hasMorePages() ? $paginator->nextPageUrl() : null;
     }
 
     /**
      * Get the previous cursor.
-     *
-     * @param CursorPaginator $paginator
-     * @return Cursor|null
      */
-    public static function previousCursor(CursorPaginator $paginator): Cursor|null
+    public static function previousCursor(CursorPaginator $paginator): ?Cursor
     {
         return $paginator->hasMorePages() ? $paginator->previousCursor() : null;
     }
 
     /**
      * Get the previous page URL.
-     *
-     * @param CursorPaginator $paginator
-     * @return string|null
      */
-    public static function previousPageUrl(CursorPaginator $paginator): string|null
+    public static function previousPageUrl(CursorPaginator $paginator): ?string
     {
         return $paginator->hasMorePages() ? $paginator->previousPageUrl() : null;
     }

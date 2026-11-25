@@ -13,28 +13,23 @@ class ResponseHelper
 {
     /**
      * API Response
-     *
-     * @var array
      */
     public static array $response = [
         'meta' => [
             'code' => null,
             'status' => 'success',
             'message' => null,
-            'pagination' => null
+            'pagination' => null,
         ],
         'data' => null,
     ];
 
     /**
      * Give success response.
-     * @param mixed|null $data
-     * @param mixed|null $message
-     * @param int $code
-     * @param bool $pagination
-     * @return JsonResponse
+     *
+     * @param  mixed|null  $message
      */
-    public static function success(mixed $data = null, string $message = null, int $code = Response::HTTP_OK, bool $pagination = false): JsonResponse
+    public static function success(mixed $data = null, ?string $message = null, int $code = Response::HTTP_OK, bool $pagination = false): JsonResponse
     {
         self::$response['meta']['message'] = $message;
         self::$response['meta']['code'] = $code;
@@ -52,10 +47,6 @@ class ResponseHelper
 
     /**
      * Give error response.
-     * @param mixed|null $data
-     * @param mixed|null $message
-     * @param int $code
-     * @return JsonResponse
      */
     public static function error(mixed $data = null, mixed $message = null, int $code = Response::HTTP_BAD_REQUEST): JsonResponse
     {

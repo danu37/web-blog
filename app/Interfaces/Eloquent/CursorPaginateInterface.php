@@ -10,13 +10,8 @@ interface CursorPaginateInterface
     /**
      * Handle paginate data event from models.
      *
-     * @param int $perPage
-     * @param string[] $columns
-     * @param string $cursorName
-     * @param null $cursor
-     * @param Request $request
-     * @return CursorPaginator
+     * @param  string[]  $columns
+     * @param  null  $cursor
      */
-
-    public function cursorPaginate(int $perPage = 10, array $columns = ['*'], string $cursorName = 'cursor', $cursor = null, Request $request): CursorPaginator;
+    public function cursorPaginate(int $perPage, array $columns, string $cursorName, $cursor, Request $request): CursorPaginator;
 }

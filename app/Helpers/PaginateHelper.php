@@ -8,9 +8,6 @@ class PaginateHelper
 {
     /**
      * Get to paginate array.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return array
      */
     public static function getPaginate(LengthAwarePaginator $paginator): array
     {
@@ -29,9 +26,6 @@ class PaginateHelper
 
     /**
      * Get the current path.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return string
      */
     public static function path(LengthAwarePaginator $paginator): string
     {
@@ -40,9 +34,6 @@ class PaginateHelper
 
     /**
      * Get the current per page.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return int
      */
     public static function perPage(LengthAwarePaginator $paginator): int
     {
@@ -51,9 +42,6 @@ class PaginateHelper
 
     /**
      * Get the current page.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return int
      */
     public static function currentPage(LengthAwarePaginator $paginator): int
     {
@@ -62,9 +50,6 @@ class PaginateHelper
 
     /**
      * Get the total number of items.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return int
      */
     public static function total(LengthAwarePaginator $paginator): int
     {
@@ -73,9 +58,6 @@ class PaginateHelper
 
     /**
      * Get the last page number.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return int
      */
     public static function lastPage(LengthAwarePaginator $paginator): int
     {
@@ -84,44 +66,32 @@ class PaginateHelper
 
     /**
      * Get the next page URL.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return string|null
      */
-    public static function nextPageUrl(LengthAwarePaginator $paginator): string|null
+    public static function nextPageUrl(LengthAwarePaginator $paginator): ?string
     {
         return $paginator->nextPageUrl();
     }
 
     /**
      * Get the previous page URL.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return string|null
      */
-    public static function previousPageUrl(LengthAwarePaginator $paginator): string|null
+    public static function previousPageUrl(LengthAwarePaginator $paginator): ?string
     {
         return $paginator->previousPageUrl();
     }
 
     /**
      * Get the starting item number of the current page.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return int|null
      */
-    public static function from(LengthAwarePaginator $paginator): int|null
+    public static function from(LengthAwarePaginator $paginator): ?int
     {
         return $paginator->firstItem();
     }
 
     /**
      * Get the ending item number of the current page.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @return int|null
      */
-    public static function to(LengthAwarePaginator $paginator): int|null
+    public static function to(LengthAwarePaginator $paginator): ?int
     {
         return $paginator->lastItem();
     }

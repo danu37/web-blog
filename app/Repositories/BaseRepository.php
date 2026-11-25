@@ -3,26 +3,17 @@
 namespace App\Repositories;
 
 use App\Interfaces\BaseInterface;
-use App\Models\Skill;           
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Str; 
 
 abstract class BaseRepository implements BaseInterface
 {
-        /**
+    /**
      * Handle model initialization.
-     *
-     * @var Model $model
      */
-
     public Model $model;
 
     /**
      * Handle the Get all data event from models.
-     *
-     * @return mixed
      */
     public function get(): mixed
     {
@@ -32,10 +23,6 @@ abstract class BaseRepository implements BaseInterface
 
     /**
      * Handle store data event to models.
-     *
-     * @param array $data
-     *
-     * @return mixed
      */
     public function store(array $data): mixed
     {
@@ -45,24 +32,14 @@ abstract class BaseRepository implements BaseInterface
 
     /**
      * Handle show method and update data instantly from models.
-     *
-     * @param mixed $id
-     * @param array $data
-     *
-     * @return mixed
      */
     public function update(mixed $id, array $data): mixed
     {
         return $this->show($id)->update($data);
     }
 
-
     /**
      * Handle get the specified data by id from models.
-     *
-     * @param mixed $id
-     *
-     * @return mixed
      */
     public function show(mixed $id): mixed
     {
@@ -72,14 +49,9 @@ abstract class BaseRepository implements BaseInterface
 
     /**
      * Handle show method and delete data instantly from models.
-     *
-     * @param mixed $id
-     *
-     * @return mixed
      */
     public function delete(mixed $id): mixed
     {
         return $this->show($id)->delete();
     }
-
 }
