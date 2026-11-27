@@ -55,12 +55,12 @@ const filteredDigestPosts = (section) => {
                         >
                             {{ section.settings.eyebrow }}
                         </p>
-                        <h1 class="font-[var(--font-display)] text-5xl sm:text-6xl lg:text-7xl tracking-[0.04em] uppercase text-white drop-shadow-[0_10px_40px_rgba(0,0,0,0.45)]">
+                        <h1 class="font-display font-normal text-[44px] sm:text-[68px] leading-tight tracking-[0.5px] uppercase text-white drop-shadow-[4px_10px_48px_rgba(0,0,0,0.37)]">
                             {{ section.title }}
                         </h1>
                         <p
                             v-if="section.description"
-                            class="text-base sm:text-2xl text-white/90 max-w-2xl mx-auto leading-relaxed tracking-wide uppercase"
+                            class="font-alegreya font-medium text-lg sm:text-[24px] text-white/95 max-w-2xl mx-auto leading-normal tracking-wide uppercase"
                         >
                             {{ section.description }}
                         </p>
@@ -453,7 +453,7 @@ const filteredDigestPosts = (section) => {
         </template>
 
         <section v-else class="max-w-7xl mx-auto px-5 sm:px-8 py-36 text-center space-y-4">
-            <h1 class="font-[var(--font-display)] text-5xl text-white uppercase">Editorial Journal</h1>
+            <h1 class="font-display font-normal text-5xl text-white uppercase">Editorial Journal</h1>
             <p class="text-sm text-[#b2b2b2]">
                 Configure homepage sections in the admin panel to publish your front page.
             </p>
