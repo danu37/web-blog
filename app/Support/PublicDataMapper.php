@@ -25,6 +25,8 @@ class PublicDataMapper
             'instagramUrl' => $settings['instagram_url'] ?? null,
             'youtubeUrl' => $settings['youtube_url'] ?? null,
             'xUrl' => $settings['x_url'] ?? null,
+            'facebookUrl' => $settings['facebook_url'] ?? null,
+            'pinterestUrl' => $settings['pinterest_url'] ?? null,
             'year' => now()->year,
         ];
     }

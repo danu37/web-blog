@@ -8,23 +8,23 @@ import SeoHead from '../../Components/SeoHead.vue';
     <SeoHead title="Page Not Found" />
     <EditorialLayout>
         <section class="max-w-3xl mx-auto px-5 sm:px-8 py-32 text-center space-y-6">
-            <p class="text-[11px] uppercase tracking-[0.28em] text-[#c8a97e]">404</p>
-            <h1 class="font-serif text-4xl sm:text-6xl text-[#f2efe9]">
-                Frame Not Found
+            <p class="text-xs uppercase tracking-[0.28em] text-[#b46b35]">404</p>
+            <h1 class="text-4xl sm:text-6xl font-semibold text-white">
+                Page Not Found
             </h1>
-            <p class="text-sm sm:text-base text-[#a39e93] max-w-md mx-auto leading-relaxed">
+            <p class="text-sm sm:text-base text-[#b2b2b2] max-w-md mx-auto leading-relaxed">
                 The page or essay you are looking for is unavailable or has been archived.
             </p>
             <div class="pt-4 flex justify-center gap-5">
                 <Link
                     href="/"
-                    class="px-6 py-3 border border-[#c8a97e] text-[11px] uppercase tracking-[0.22em] text-[#f2efe9] hover:bg-[#c8a97e] hover:text-[#0c0c0d] transition-colors"
+                    class="px-6 py-3 bg-[#b46b35] text-xs uppercase tracking-[0.2em] text-white hover:bg-[#9c5a2b] transition-colors rounded"
                 >
                     Return Home
                 </Link>
                 <Link
                     href="/blog"
-                    class="px-6 py-3 border border-[#2a2a30] text-[11px] uppercase tracking-[0.22em] text-[#a39e93] hover:text-[#f2efe9] transition-colors"
+                    class="px-6 py-3 border border-[#2c303c] text-xs uppercase tracking-[0.2em] text-[#b2b2b2] hover:text-white transition-colors rounded"
                 >
                     Browse Journal
                 </Link>

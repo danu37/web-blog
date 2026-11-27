@@ -18,6 +18,7 @@ class HomepageSection extends Model
         'projects',
         'article_grid',
         'gallery_strip',
+        'category_digest',
     ];
 
     protected $fillable = [

@@ -48,15 +48,15 @@ const submitSearch = () => {
     <SeoHead :title="archiveTitle" :description="archiveDescription" />
     <EditorialLayout>
         <section class="max-w-7xl mx-auto px-5 sm:px-8 pt-16 pb-20">
-            <header class="border-b border-[#1e1e22] pb-12 mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-                <div class="space-y-4 max-w-2xl">
-                    <p class="text-[11px] uppercase tracking-[0.26em] text-[#c8a97e]">
-                        Archive
+            <header class="border-b border-[#242732] pb-12 mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+                <div class="space-y-3 max-w-2xl">
+                    <p class="text-sm font-medium text-[#b46b35]">
+                        Our Blog
                     </p>
-                    <h1 class="font-serif text-4xl sm:text-5xl text-[#f2efe9]">
+                    <h1 class="text-4xl sm:text-5xl font-semibold text-white">
                         {{ archiveTitle }}
                     </h1>
-                    <p v-if="archiveDescription" class="text-sm sm:text-base text-[#a39e93] leading-relaxed">
+                    <p v-if="archiveDescription" class="text-sm sm:text-base text-[#b2b2b2] leading-relaxed">
                         {{ archiveDescription }}
                     </p>
                 </div>
@@ -68,11 +68,11 @@ const submitSearch = () => {
                         v-model="search"
                         type="search"
                         placeholder="Search stories..."
-                        class="w-full bg-[#141416] border border-[#2a2a30] px-4 py-2.5 text-sm text-[#f2efe9] placeholder-[#6f6b63] focus:outline-none focus:border-[#c8a97e]"
+                        class="w-full bg-[#1a1c23] border border-[#2c303c] rounded px-4 py-2.5 text-sm text-white placeholder-[#6e6e6e] focus:outline-none focus:border-[#b46b35]"
                     />
                     <button
                         type="submit"
-                        class="px-4 py-2.5 border border-[#2a2a30] text-[11px] uppercase tracking-[0.2em] text-[#d6d2c9] hover:border-[#c8a97e] hover:text-[#c8a97e] transition-colors"
+                        class="px-5 py-2.5 bg-[#b46b35] text-white text-xs uppercase tracking-[0.18em] rounded hover:bg-[#9c5a2b] transition-colors"
                     >
                         Find
                     </button>
@@ -83,10 +83,10 @@ const submitSearch = () => {
                 <Link
                     href="/blog"
                     :class="[
-                        'px-3.5 py-1.5 text-[11px] uppercase tracking-[0.2em] border transition-colors',
+                        'px-4 py-1.5 text-xs uppercase tracking-[0.18em] border rounded transition-colors',
                         !activeCategory && !activeTag
-                            ? 'border-[#c8a97e] text-[#c8a97e]'
-                            : 'border-[#1e1e22] text-[#a39e93] hover:text-[#f2efe9]',
+                            ? 'border-[#b46b35] text-[#b46b35] bg-[#1a1c23]'
+                            : 'border-[#242732] text-[#b2b2b2] hover:text-white',
                     ]"
                 >
                     All
@@ -96,10 +96,10 @@ const submitSearch = () => {
                     :key="cat.id"
                     :href="`/category/${cat.slug}`"
                     :class="[
-                        'px-3.5 py-1.5 text-[11px] uppercase tracking-[0.2em] border transition-colors',
+                        'px-4 py-1.5 text-xs uppercase tracking-[0.18em] border rounded transition-colors',
                         activeCategory === cat.slug
-                            ? 'border-[#c8a97e] text-[#c8a97e]'
-                            : 'border-[#1e1e22] text-[#a39e93] hover:text-[#f2efe9]',
+                            ? 'border-[#b46b35] text-[#b46b35] bg-[#1a1c23]'
+                            : 'border-[#242732] text-[#b2b2b2] hover:text-white',
                     ]"
                 >
                     {{ cat.name }}
@@ -110,14 +110,14 @@ const submitSearch = () => {
                 <PostCard v-for="post in posts.data" :key="post.id" :post="post" />
             </div>
 
-            <div v-else class="py-24 text-center border border-[#1e1e22] bg-[#141416]/50 space-y-4">
-                <p class="font-serif text-2xl text-[#f2efe9]">No stories found</p>
-                <p class="text-sm text-[#a39e93]">
+            <div v-else class="py-24 text-center border border-[#242732] bg-[#1a1c23]/50 rounded-lg space-y-4">
+                <p class="text-2xl font-semibold text-white">No stories found</p>
+                <p class="text-sm text-[#b2b2b2]">
                     Try another keyword or browse all published entries.
                 </p>
                 <Link
                     href="/blog"
-                    class="inline-block text-[11px] uppercase tracking-[0.22em] text-[#c8a97e] hover:underline underline-offset-4"
+                    class="inline-block text-xs uppercase tracking-[0.2em] text-[#b46b35] hover:underline underline-offset-4"
                 >
                     Reset Archive
                 </Link>

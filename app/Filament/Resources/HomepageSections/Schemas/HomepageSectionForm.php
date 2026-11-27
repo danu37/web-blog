@@ -26,11 +26,12 @@ class HomepageSectionForm
                 Select::make('type')
                     ->options([
                         'hero' => 'Hero / Masthead',
+                        'editorial_intro' => 'Editorial Intro (Arch Portrait)',
+                        'projects' => 'Selected Shop / Projects',
                         'featured_post' => 'Featured Article',
-                        'editorial_intro' => 'Editorial Intro',
-                        'projects' => 'Selected Projects / Shop',
-                        'article_grid' => 'Article Grid',
+                        'article_grid' => 'Article Grid (3:4 Portrait)',
                         'gallery_strip' => 'Gallery Strip',
+                        'category_digest' => 'Category Digest & Latest',
                     ])
                     ->in(HomepageSection::ALLOWED_TYPES)
                     ->required(),
@@ -52,6 +53,7 @@ class HomepageSectionForm
                     ->label('Section Settings')
                     ->keyLabel('Setting Key')
                     ->valueLabel('Value')
+                    ->helperText('Supported keys: eyebrow, background_image, portrait_image, secondary_description, cta_label, cta_url, items (JSON array of {title, price_label, price_value, description, image_url, link_url}).')
                     ->nullable()
                     ->columnSpanFull(),
             ]);

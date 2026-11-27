@@ -53,20 +53,20 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
             <div class="mb-8">
                 <Link
                     href="/gallery"
-                    class="text-[11px] uppercase tracking-[0.22em] text-[#a39e93] hover:text-[#c8a97e]"
+                    class="text-xs uppercase tracking-[0.2em] text-[#b2b2b2] hover:text-[#b46b35]"
                 >
                     &larr; All Galleries
                 </Link>
             </div>
 
-            <header class="border-b border-[#1e1e22] pb-12 mb-14 space-y-4 max-w-3xl">
-                <p v-if="gallery.published_at_formatted" class="text-[11px] uppercase tracking-[0.24em] text-[#c8a97e]">
+            <header class="border-b border-[#242732] pb-12 mb-14 space-y-4 max-w-3xl">
+                <p v-if="gallery.published_at_formatted" class="text-xs uppercase tracking-[0.22em] text-[#b46b35]">
                     {{ gallery.published_at_formatted }}
                 </p>
-                <h1 class="font-serif text-4xl sm:text-5xl text-[#f2efe9]">
+                <h1 class="text-4xl sm:text-5xl font-semibold text-white">
                     {{ gallery.title }}
                 </h1>
-                <p v-if="gallery.description" class="text-sm sm:text-base text-[#a39e93] leading-relaxed">
+                <p v-if="gallery.description" class="text-sm sm:text-base text-[#b2b2b2] leading-relaxed">
                     {{ gallery.description }}
                 </p>
             </header>
@@ -75,7 +75,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
                 <figure v-for="(item, index) in gallery.media" :key="item.id" class="space-y-3">
                     <button
                         type="button"
-                        class="block w-full overflow-hidden bg-[#141416] border border-[#1e1e22] aspect-[4/3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c8a97e] cursor-zoom-in"
+                        class="block w-full overflow-hidden bg-[#1a1c23] border border-[#242732] aspect-[4/3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b46b35] cursor-zoom-in"
                         @click="openLightbox(index)"
                     >
                         <img
@@ -85,14 +85,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
                             class="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700"
                         />
                     </button>
-                    <figcaption v-if="item.caption" class="text-xs text-[#a39e93] tracking-wide">
+                    <figcaption v-if="item.caption" class="text-xs text-[#b2b2b2] tracking-wide">
                         {{ item.caption }}
                     </figcaption>
                 </figure>
             </div>
 
-            <div v-else class="py-24 text-center border border-[#1e1e22] bg-[#141416]/50">
-                <p class="font-serif text-2xl text-[#f2efe9]">No images in this gallery yet</p>
+            <div v-else class="py-24 text-center border border-[#242732] bg-[#1a1c23]/50 rounded-lg">
+                <p class="text-2xl font-semibold text-white">No images in this gallery yet</p>
             </div>
         </section>
 
@@ -101,13 +101,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
             v-if="activeIndex !== null && gallery.media[activeIndex]"
             role="dialog"
             aria-modal="true"
-            class="fixed inset-0 z-50 bg-[#0c0c0d]/95 flex items-center justify-center p-4 sm:p-10"
+            class="fixed inset-0 z-50 bg-[#0a0a0a]/95 flex items-center justify-center p-4 sm:p-10"
             @click.self="closeLightbox"
         >
             <button
                 type="button"
                 aria-label="Close lightbox"
-                class="absolute top-6 right-6 text-xs uppercase tracking-[0.22em] text-[#a39e93] hover:text-[#f2efe9] px-3 py-2 border border-[#2a2a30]"
+                class="absolute top-6 right-6 text-xs uppercase tracking-[0.2em] text-[#b2b2b2] hover:text-white px-3.5 py-2 border border-[#2c303c] rounded"
                 @click="closeLightbox"
             >
                 Close
@@ -116,7 +116,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
             <button
                 type="button"
                 aria-label="Previous image"
-                class="hidden sm:inline-flex px-4 py-3 text-xs uppercase tracking-[0.2em] text-[#a39e93] hover:text-[#f2efe9]"
+                class="hidden sm:inline-flex px-4 py-3 text-xs uppercase tracking-[0.2em] text-[#b2b2b2] hover:text-white"
                 @click="prevFrame"
             >
                 Prev
@@ -126,9 +126,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
                 <img
                     :src="gallery.media[activeIndex].url"
                     :alt="gallery.media[activeIndex].alt"
-                    class="max-h-[75vh] w-auto object-contain border border-[#1e1e22]"
+                    class="max-h-[75vh] w-auto object-contain border border-[#242732]"
                 />
-                <p v-if="gallery.media[activeIndex].caption" class="text-xs text-[#d6d2c9]">
+                <p v-if="gallery.media[activeIndex].caption" class="text-xs text-[#d6d6dc]">
                     {{ gallery.media[activeIndex].caption }}
                 </p>
             </div>
@@ -136,7 +136,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
             <button
                 type="button"
                 aria-label="Next image"
-                class="hidden sm:inline-flex px-4 py-3 text-xs uppercase tracking-[0.2em] text-[#a39e93] hover:text-[#f2efe9]"
+                class="hidden sm:inline-flex px-4 py-3 text-xs uppercase tracking-[0.2em] text-[#b2b2b2] hover:text-white"
                 @click="nextFrame"
             >
                 Next

@@ -16,14 +16,14 @@ defineProps({
     <SeoHead title="Galleries" description="Curated photography series and visual monographs." />
     <EditorialLayout>
         <section class="max-w-7xl mx-auto px-5 sm:px-8 pt-16 pb-20">
-            <header class="border-b border-[#1e1e22] pb-12 mb-12 space-y-4 max-w-2xl">
-                <p class="text-[11px] uppercase tracking-[0.26em] text-[#c8a97e]">
+            <header class="border-b border-[#242732] pb-12 mb-12 space-y-3 max-w-2xl">
+                <p class="text-sm font-medium text-[#b46b35]">
                     Visual Series
                 </p>
-                <h1 class="font-serif text-4xl sm:text-5xl text-[#f2efe9]">
+                <h1 class="text-4xl sm:text-5xl font-semibold text-white">
                     Galleries
                 </h1>
-                <p class="text-sm sm:text-base text-[#a39e93] leading-relaxed">
+                <p class="text-sm sm:text-base text-[#b2b2b2] leading-relaxed">
                     Sequenced photographic portfolios and monochrome studies.
                 </p>
             </header>
@@ -32,7 +32,7 @@ defineProps({
                 <article v-for="gallery in galleries.data" :key="gallery.id" class="group">
                     <Link
                         :href="`/gallery/${gallery.slug}`"
-                        class="block overflow-hidden bg-[#141416] border border-[#1e1e22] aspect-[4/3] mb-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c8a97e]"
+                        class="block overflow-hidden bg-[#1a1c23] border border-[#242732] aspect-[4/3] mb-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b46b35]"
                     >
                         <img
                             v-if="gallery.cover_image"
@@ -43,31 +43,31 @@ defineProps({
                         />
                         <div
                             v-else
-                            class="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-[0.25em] text-[#55524b]"
+                            class="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-[0.25em] text-[#6e6e6e]"
                         >
                             Empty Series
                         </div>
                     </Link>
 
-                    <div class="flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-[#a39e93] mb-2">
-                        <span>{{ gallery.media_count }} Frames</span>
+                    <div class="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[#b2b2b2] mb-2">
+                        <span class="text-[#b46b35]">{{ gallery.media_count }} Frames</span>
                         <span v-if="gallery.published_at_formatted">{{ gallery.published_at_formatted }}</span>
                     </div>
 
-                    <h2 class="font-serif text-2xl text-[#f2efe9] group-hover:text-[#c8a97e] transition-colors mb-2">
+                    <h2 class="text-xl font-semibold text-white group-hover:text-[#b46b35] transition-colors mb-2">
                         <Link :href="`/gallery/${gallery.slug}`">
                             {{ gallery.title }}
                         </Link>
                     </h2>
 
-                    <p v-if="gallery.description" class="text-sm text-[#a39e93] line-clamp-2">
+                    <p v-if="gallery.description" class="text-sm text-[#b2b2b2] line-clamp-2">
                         {{ gallery.description }}
                     </p>
                 </article>
             </div>
 
-            <div v-else class="py-24 text-center border border-[#1e1e22] bg-[#141416]/50">
-                <p class="font-serif text-2xl text-[#f2efe9]">No galleries published yet</p>
+            <div v-else class="py-24 text-center border border-[#242732] bg-[#1a1c23]/50 rounded-lg">
+                <p class="text-2xl font-semibold text-white">No galleries published yet</p>
             </div>
 
             <Pagination v-if="galleries.links" :links="galleries.links" />

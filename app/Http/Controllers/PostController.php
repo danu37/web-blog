@@ -61,11 +61,20 @@ class PostController extends Controller
             ->get()
             ->map(fn (Post $item) => PublicDataMapper::postSummary($item));
 
+        $latest = Post::published()
+            ->with(['category', 'featuredImage'])
+            ->where('id', '!=', $post->id)
+            ->latest('published_at')
+            ->take(4)
+            ->get()
+            ->map(fn (Post $item) => PublicDataMapper::postSummary($item));
+
         return Inertia::render('Blog/Show', [
             'post' => array_merge(PublicDataMapper::postSummary($post), [
                 'content' => HtmlSanitizer::clean($post->content),
             ]),
             'relatedPosts' => $related,
+            'latestPosts' => $latest,
         ]);
     }
 

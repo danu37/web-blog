@@ -19,6 +19,8 @@ class SiteSettingForm
         'instagram_url' => 'Instagram URL',
         'youtube_url' => 'YouTube URL',
         'x_url' => 'X / Twitter URL',
+        'facebook_url' => 'Facebook URL',
+        'pinterest_url' => 'Pinterest URL',
     ];
 
     public static function configure(Schema $schema): Schema

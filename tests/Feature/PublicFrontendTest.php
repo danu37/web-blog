@@ -121,6 +121,7 @@ class PublicFrontendTest extends TestCase
                 ->component('Blog/Show')
                 ->where('post.slug', 'clean-story')
                 ->where('post.content', '<p>Safe prose</p>')
+                ->has('latestPosts')
             );
 
         $this->get('/blog/hidden-draft')
@@ -177,5 +178,47 @@ class PublicFrontendTest extends TestCase
         $this->get('/nonexistent-editorial-route')
             ->assertNotFound()
             ->assertInertia(fn (Assert $page) => $page->component('Errors/NotFound'));
+    }
+
+    public function test_homepage_supports_projects_and_category_digest_sections(): void
+    {
+        $category = Category::factory()->create(['slug' => 'essays']);
+        Post::factory()->create([
+            'category_id' => $category->id,
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        HomepageSection::create([
+            'title' => 'Selected Editions',
+            'section_key' => 'projects',
+            'type' => 'projects',
+            'sort_order' => 1,
+            'is_active' => true,
+            'settings' => [
+                'eyebrow' => 'Curated Choice',
+                'items' => json_encode([
+                    ['title' => 'Print Edition', 'price_label' => 'IDR', 'price_value' => '150,000.00'],
+                ]),
+            ],
+        ]);
+
+        HomepageSection::create([
+            'title' => 'Category Digest',
+            'section_key' => 'category_digest',
+            'type' => 'category_digest',
+            'sort_order' => 2,
+            'is_active' => true,
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Home')
+                ->has('sections', 2)
+                ->where('sections.0.items.0.title', 'Print Edition')
+                ->has('sections.1.categories', 1)
+                ->has('sections.1.posts', 1)
+            );
     }
 }

@@ -2,18 +2,18 @@
 
 ## 1. Project goal
 
-Build a complete editorial / photography blog website inspired by the reference image supplied by the user.
+Build a complete editorial / photography blog website aligned with the approved Figma design (`Blogging-Website-UI`, frames `Blog homepage` and `Blog single`).
 
 The public website should feel like a dark, minimal, image-led editorial magazine:
-- Near-black / charcoal backgrounds.
-- Large photography and strong visual hierarchy.
-- Compact uppercase or editorial typography where appropriate.
-- Carefully spaced article grids.
+- Near-black / charcoal backgrounds (`#121317` canvas, `#1a1c23` card surfaces, `#0a0a0a` footer bar) with restrained warm amber editorial accents (`#b46b35`).
+- Full-bleed hero photography with transparent top navigation and strong visual hierarchy.
+- Compact uppercase or editorial typography where appropriate (`Inter` / `Poppins` body and `Aladin` / editorial serif display headings).
+- Carefully spaced 3-column article grids (including tall portrait `3:4` photography cards) and horizontal gallery strips.
 - Responsive layout for desktop, tablet, and mobile.
 - Avoid generic SaaS dashboard styling on the public website.
-- Do not copy logos, text, or copyrighted assets from the reference. Use original placeholder content and replaceable images.
+- Do not copy sample brand names, logos, placeholder text ("Lorem ipsum"), or copyrighted assets from the Figma reference. Use original placeholder content and replaceable images managed through the CMS.
 
-The site must include a CMS so an authorized admin can change text, descriptions, images, article order, gallery content, and homepage sections without editing source code.
+The site must include a CMS so an authorized admin can change text, descriptions, images, article order, gallery content, shop/project items, and homepage sections without editing source code.
 
 ## 2. Approved technology stack
 
@@ -52,28 +52,33 @@ Important:
 ## 4. Core product scope
 
 ### Public pages
-- Homepage
-- Article listing / blog archive
-- Article detail page
-- Category archive
-- Tag archive (optional but implement if tags are included)
-- Gallery listing
-- Gallery detail
-- About page
-- Contact page (basic contact information; do not add email sending unless configured)
+- Homepage (`/`) — modular layout matching Figma `Blog homepage`
+- Article listing / blog archive (`/blog` with search and pagination)
+- Article detail page (`/blog/{slug}`) — matching Figma `Blog single` (dark hero header with breadcrumb, title, subtitle, author, reading time, publication date; editorial prose body; optional "The Latest" & social sidebar; tags and 3-column "You May Also Like" related articles grid)
+- Category archive (`/category/{slug}`)
+- Tag archive (`/tag/{slug}`)
+- Gallery listing (`/gallery`)
+- Gallery detail (`/gallery/{slug}` with ordered frames and lightbox)
+- About page (`/about`)
+- Contact page (`/contact`, basic contact information; do not add email sending unless configured)
 - Custom 404 page
 
+### Top Navigation & Footer (matching Figma)
+- Top navigation bar overlaid cleanly on the hero masthead (and solid dark on inner pages): site logo/title on the left, primary links (`Home`, `Journal`/`Blog`, `Galleries`, `About`, `Contact`, plus optional `Shop`/`Projects` or categories) in the center, and a working article search trigger/input on the right.
+- Dark `#0a0a0a` footer with site identity/attribution on the left and configured social media links/icons on the right.
+
 ### Homepage sections
-The homepage should be assembled from admin-managed content:
-- Hero / masthead
-- Featured article
-- Intro / editorial profile section
-- Selected shop / projects section (if configured)
-- Article or editorial grid
-- Gallery strip
+The homepage should be assembled from admin-managed content (`homepage_sections`):
+- Hero / masthead (`hero`): full-bleed background photograph with dark overlay (`rgba(0,0,0,0.39)`), centered uppercase display title, and subtitle.
+- Editorial intro / profile section (`editorial_intro`): two-column layout featuring an arched portrait frame (`rounded-t-full`) on the left, warm accent eyebrow (`#b46b35`), bold uppercase heading, and editorial profile paragraphs on the right.
+- Selected shop / projects section (`projects`, if enabled and configured): centered eyebrow + heading with a 3-column `#1a1c23` card grid displaying item image, price/label (`#b46b35` currency/tag + value), short description, and optional link.
+- Featured article (`featured_post`): prominent editorial story spotlight with photograph, category, publication date, and excerpt.
+- Article / editorial grid (`article_grid`): centered eyebrow + heading with a 3-column grid (3 or 6 posts) using tall portrait photography (`aspect-[3/4]`), excerpts, and a "Load more" / "View all" link to `/blog`.
+- Gallery strip (`gallery_strip`): full-width horizontal strip of published gallery photographs linking to `/gallery/{slug}`.
+- Category digest (`category_digest`, optional): category filter tabs paired with a featured story and compact "latest" thumbnail list.
 - Footer
 
-Sections must be enabled/disabled and reordered in admin. The public frontend must render only active sections in their configured order. Avoid hardcoding the reference image's sample text.
+Sections must be enabled/disabled and reordered in admin. The public frontend must render only active sections in their configured order. Avoid hardcoding the Figma reference's sample text.
 
 ### Admin CMS
 Use Filament at `/admin`.
@@ -129,12 +134,12 @@ Use UUID primary keys (`$table->uuid('id')->primary()`) consistently for all rel
 
 10. `site_settings`
    - key unique, value LONGTEXT nullable, type nullable, timestamps.
-   - Validate known settings in application code. Do not treat arbitrary stored values as executable code.
+   - Validate known settings in application code (site name, site description, logo, favicon, footer text, contact email/location, and social URLs such as Instagram, YouTube, X/Twitter, Facebook, Pinterest). Do not treat arbitrary stored values as executable code.
 
 11. `homepage_sections`
    - title, section_key unique, type, description nullable, settings JSON nullable,
    - sort_order unsigned integer default 0, is_active boolean default true, timestamps.
-   - Define a strict allowlist of supported section types and validate settings per type.
+   - Define a strict allowlist of supported section types (`hero`, `editorial_intro`, `projects`, `featured_post`, `article_grid`, `gallery_strip`, `category_digest`) and validate structured settings per type (e.g., `eyebrow`, `background_image`, `portrait_image`, `items` for shop/projects, `cta_label`/`cta_url`).
 
 ### Database implementation rules
 - Create migrations in dependency order: users (existing Laravel migration), categories, tags, media, posts, post_tag, galleries, gallery_media, pages, site_settings, homepage_sections.
@@ -172,15 +177,17 @@ Use UUID primary keys (`$table->uuid('id')->primary()`) consistently for all rel
 
 ## 8. Public frontend quality
 
-- Match the supplied reference's visual direction, not its exact content.
+- Match the Figma design system (`Blogging-Website-UI`) and visual direction, not its sample/brand content:
+  - **Colors**: `#121317` main dark canvas, `#1a1c23` elevated card surface, `#0a0a0a` footer surface, `#b46b35` warm editorial accent, `#ffffff` / `#f2efe9` primary text, `#b2b2b2` / `#6e6e6e` muted copy.
+  - **Typography & Ratios**: uppercase display masthead, clean sans-serif / editorial body, arched (`rounded-t-full`) intro portrait, `aspect-[3/4]` portrait cards for homepage editorial grid, `aspect-[4/3]` for archive/shop cards, and horizontal full-bleed strip for gallery preview.
 - Use a consistent design system: colors, spacing, typography, image ratios, container widths, and breakpoints.
 - Use semantic HTML, accessible labels, keyboard-friendly navigation, visible focus states, and sufficient contrast.
-- Make layouts responsive from small mobile screens upward.
+- Make layouts responsive from small mobile screens upward (collapsing multi-column grids and top navbar cleanly into a mobile menu).
 - Add SEO title, meta description, canonical URL, Open Graph image, and structured article metadata where appropriate.
-- Use pagination for article archives.
+- Use pagination for article archives and working search filtering (`/blog?q=...`).
 - Add empty states and graceful fallbacks when images or sections are missing.
 - Optimize images and avoid loading every gallery image at once.
-- Do not use excessive cards, gradients, glassmorphism, or generic dashboard styling on the public editorial website.
+- Do not use excessive cards, bright gradients, glassmorphism, or generic dashboard styling on the public editorial website.
 
 ## 9. Suggested code organization
 

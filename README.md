@@ -1,66 +1,159 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Editorial & Photography Blog Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A dark, minimal, image-led editorial and photography blog built with **Laravel 12**, **Filament 5**, **Vue 3**, **Inertia.js**, **Tailwind CSS 4**, and **MySQL** using **UUID** primary and foreign keys across all domain tables.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tech Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Backend**: Laravel 12 (`^12.0`), PHP 8.2+
+- **Admin CMS**: Filament 5 Panel Builder (`/admin`)
+- **Public Frontend**: Vue 3 + Inertia.js
+- **Styling**: Tailwind CSS 4.1+ (`@tailwindcss/vite`) + Vite 6
+- **Database**: MySQL 8+ / MariaDB (UUID primary & foreign keys)
+- **Media Storage**: Laravel Filesystem (`public` disk via `storage/app/public`)
+- **Testing**: PHPUnit 11
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Local Setup (Windows / PowerShell)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Prerequisites
+- PHP 8.2+ with extensions: `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, `gd`, `intl`, `zip`
+- Composer 2.x
+- Node.js 20+ & npm
+- MySQL 8+ or MariaDB (e.g., via Laragon or XAMPP)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Install Dependencies
+```powershell
+composer install
+npm install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Configure `.env`
+Copy `.env.example` to `.env` if not already present, generate the app key, and configure MySQL:
+```powershell
+Copy-Item .env.example .env
+php artisan key:generate
+```
 
-## Laravel Sponsors
+Update your `.env` values:
+```env
+APP_NAME="NOIR & FRAME"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=blog_website
+DB_USERNAME=root
+DB_PASSWORD=
 
-### Premium Partners
+SESSION_DRIVER=database
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+> **Important**: Always point your web server's document root to the `public/` directory (e.g., using `php artisan serve` or a VirtualHost like `http://blog-website.test`), and match `APP_URL` to that URL so `/storage/...` media URLs resolve properly.
 
-## Contributing
+### 4. Database Setup & Migrations
+Create the `blog_website` database in MySQL, then run migrations:
+```powershell
+php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Optionally seed sample editorial content in **local/development** only (the seeder automatically skips execution when `APP_ENV=production`):
+```powershell
+# Optional: set initial dev passwords in .env or shell before seeding
+php artisan db:seed
+```
 
-## Code of Conduct
+> Never run `php artisan migrate:fresh` or `php artisan db:wipe` on a database containing user data.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Link Public Storage
+```powershell
+php artisan storage:link
+```
+Uploaded images are stored under `storage/app/public/media/YYYY/MM/`.
 
-## Security Vulnerabilities
+### 6. Create the First Admin User
+Create an admin account interactively (never hardcode weak passwords):
+```powershell
+php artisan make:filament-user
+```
+Panel access at `/admin` is enforced server-side in `App\Models\User::canAccessPanel()` and is restricted to users with `role = 'admin'` or `role = 'editor'`. Ensure the created user has `role` set to `'admin'` (the migration defaults `role` to `'admin'`).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 7. Run Locally
+```powershell
+# Terminal 1: Laravel server
+php artisan serve
 
-## License
+# Terminal 2: Vite dev server
+npm run dev
+```
+- Public site: `http://127.0.0.1:8000`
+- Admin CMS: `http://127.0.0.1:8000/admin`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Testing & Build Commands
+
+Tests are configured in `phpunit.xml` to use a separate MySQL database (`blog_website_test`) so development data in `blog_website` is never touched.
+
+```powershell
+# Create the test database once
+mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS blog_website_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Run the full test suite
+php artisan test
+
+# Check/format PHP code style with Laravel Pint
+php vendor/bin/pint
+
+# Build production frontend assets
+npm run build
+```
+
+---
+
+## Public Routes & CMS Features
+
+### Public Routes
+- `/` — Modular homepage assembled from active `homepage_sections` in `sort_order`
+- `/blog` — Paginated article archive with search
+- `/blog/{slug}` — Article detail with sanitized HTML, SEO & Open Graph metadata, and related stories
+- `/category/{slug}` — Category archive
+- `/tag/{slug}` — Tag archive
+- `/gallery` — Published photography series archive
+- `/gallery/{slug}` — Ordered gallery frames with keyboard-accessible lightbox
+- `/about` & `/contact` — Editorial pages + site contact settings
+- Custom `404` Inertia page for unmatched public routes
+
+### Admin CMS (`/admin`)
+- **Dashboard**: Stats overview (published posts, drafts, categories, media items, galleries)
+- **Editorial Content**: Posts, Categories, Tags, Galleries (with drag-and-drop media ordering and captions), Pages
+- **Media Library**: Raster-only uploads (JPEG, PNG, WebP up to 5 MB), metadata tracking, and reference-checked safe deletion
+- **Admin-Only Settings**: Homepage Sections (active toggle, strict type allowlist, sort order), Site Settings (controlled key allowlist), and Users (`admin` / `editor` roles)
+
+---
+
+## Deployment Notes (PHP Hosting)
+
+Before deploying to a PHP hosting environment, verify that the server meets these requirements:
+- **PHP Version & Extensions**: PHP `8.2+` with `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, `gd`, `intl`, and `zip`.
+- **Document Root**: Point the domain/virtual host to `public/`, **not** the repository root.
+- **Writable Directories**: Ensure `storage/` and `bootstrap/cache/` are writable by the web server user.
+- **Environment Variables**: Set `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://your-domain.com`, and production database credentials in `.env` (never commit `.env`).
+- **Build & Deploy Steps**:
+  1. Install production PHP dependencies: `composer install --no-dev --optimize-autoloader`
+  2. Build frontend assets (locally or in CI/CD if Node is not available on the host): `npm ci && npm run build`
+  3. Run migrations: `php artisan migrate --force`
+  4. Link storage (if symlinks are permitted; otherwise configure web server alias for `/storage` -> `storage/app/public`): `php artisan storage:link`
+  5. Cache framework & Filament artifacts:
+     ```bash
+     php artisan optimize
+     php artisan filament:optimize
+     ```
+- **Queues**: `QUEUE_CONNECTION` defaults to `database`. If you configure queued jobs later, run `php artisan queue:work --tries=3` under a process supervisor.

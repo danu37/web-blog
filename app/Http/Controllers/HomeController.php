@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\HomepageSection;
 use App\Models\Media;
@@ -19,11 +20,12 @@ class HomeController extends Controller
         $posts = Post::published()
             ->with(['user', 'category', 'featuredImage', 'tags'])
             ->latest('published_at')
-            ->take(10)
+            ->take(12)
             ->get();
 
         $featuredPost = $posts->first();
-        $gridPosts = $posts->slice(1, 6)->values();
+        $hasFeaturedSection = $sections->contains('type', 'featured_post');
+        $gridPosts = ($hasFeaturedSection ? $posts->slice(1, 6) : $posts->take(6))->values();
 
         $galleryMedia = Gallery::published()
             ->with('media')
@@ -41,14 +43,20 @@ class HomeController extends Controller
             ->take(8)
             ->values();
 
-        $payload = $sections->map(function (HomepageSection $section) use ($featuredPost, $gridPosts, $galleryMedia): array {
+        $categories = $sections->contains('type', 'category_digest')
+            ? Category::query()->orderBy('name')->take(6)->get(['id', 'name', 'slug'])
+            : collect();
+
+        $payload = $sections->map(function (HomepageSection $section) use ($featuredPost, $gridPosts, $galleryMedia, $posts, $categories): array {
+            $settings = is_array($section->settings) ? $section->settings : [];
+
             $data = [
                 'id' => $section->id,
                 'key' => $section->section_key,
                 'type' => $section->type,
                 'title' => $section->title,
                 'description' => $section->description,
-                'settings' => $section->settings ?? [],
+                'settings' => $settings,
             ];
 
             if ($section->type === 'featured_post') {
@@ -57,6 +65,16 @@ class HomeController extends Controller
                 $data['posts'] = $gridPosts->map(fn (Post $post) => PublicDataMapper::postSummary($post))->all();
             } elseif ($section->type === 'gallery_strip') {
                 $data['items'] = $galleryMedia->all();
+            } elseif ($section->type === 'projects') {
+                $rawItems = $settings['items'] ?? [];
+                if (is_string($rawItems)) {
+                    $decoded = json_decode($rawItems, true);
+                    $rawItems = is_array($decoded) ? $decoded : [];
+                }
+                $data['items'] = is_array($rawItems) ? array_values($rawItems) : [];
+            } elseif ($section->type === 'category_digest') {
+                $data['categories'] = $categories->toArray();
+                $data['posts'] = $posts->map(fn (Post $post) => PublicDataMapper::postSummary($post))->all();
             }
 
             return $data;
